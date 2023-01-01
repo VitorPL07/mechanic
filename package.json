@@ -1,0 +1,16 @@
+{
+  "name": "mechanic",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "electron src/index.js"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^22.0.0"
+  },
+  "dependencies": {
+    "qrcode": "^1.5.1",
+    "whatsapp-web.js": "^1.18.4"
+  }
+}

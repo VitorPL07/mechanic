@@ -22,7 +22,7 @@ function createWindow() {
 
     win.maximize();
 
-    win.loadFile("./views/index.html");
+    win.loadFile("./views/login.html");
 }
 
 app.whenReady().then(createWindow);

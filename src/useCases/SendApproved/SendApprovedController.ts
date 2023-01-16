@@ -1,26 +1,25 @@
 import { Request, Response } from "express";
-import { LoginUserUseCase } from "./LoginUserUseCase";
+import { SendApprovedUseCase } from "./SendApprovedUseCase";
 
-export class LoginUserController {
+export class SendApprovedController {
     constructor(
-        private loginUserUseCase: LoginUserUseCase
+        private sendApprovedUseCase: SendApprovedUseCase
     ) { }
 
     async handle(request: Request, response: Response): Promise<Response> {
-        const { email, password } = request.body;
+        const { email, context } = request.body;
 
         try {
-            const user = await this.loginUserUseCase.execute({
+            await this.sendApprovedUseCase.execute({
                 email,
-                password
+                message: context
             });
-            return response.status(200).json(user);
+            return response.status(200).json({ message: 'Sucess!' });
         } catch (err: any) {
             return response.status(400).json({
                 message: err.message || 'Unexpected error'
             });
         }
-
 
     }
 }

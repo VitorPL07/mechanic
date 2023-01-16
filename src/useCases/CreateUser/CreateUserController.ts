@@ -14,7 +14,6 @@ export class CreateUserController {
             email,
             password
         }).catch((err: any) => {
-            console.log(err);
             return response.status(400).json({
                 message: err.message || 'Unexpected error'
             });

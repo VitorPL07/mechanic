@@ -1,12 +1,12 @@
 import { IUsersRepository } from "../../repositories/IUsersRepository";
-import { ILoginUserDTO } from "./LoginUserDTO";
+import { ILoginUserRequestDTO } from "./LoginUserDTO";
 
 export class LoginUserUseCase {
     constructor(
         private userRepository: IUsersRepository
     ) { }
 
-    async execute(data: ILoginUserDTO) {
+    async execute(data: ILoginUserRequestDTO) {
         const user = await this.userRepository.find(data);
 
         if (!user) {

@@ -1,10 +1,12 @@
 import { Request, Response, Router } from "express";
 import path from "path";
+import { SocketIORepository } from "./repositories/implementations/SocketIORepository";
 import { createUserController } from "./useCases/CreateUser";
 import { loginUserController } from "./useCases/LoginUser";
 import { sendApprovedController } from "./useCases/SendApproved";
 
 const router = Router();
+const socketRepository = new SocketIORepository();
 
 router.get('/', (request: Request, response: Response) => {
     response.sendFile(path.resolve(__dirname, 'views', 'index.html'));
@@ -24,8 +26,8 @@ router.post('/create/user', (request: Request, response: Response) => {
 });
 
 router.post('/send', (request: Request, response: Response) => {
-    return sendApprovedController.handle(request, response);
+    return sendApprovedController.handle(request, response, socketRepository);
 })
 
-export { router };
+export { router, socketRepository };
 

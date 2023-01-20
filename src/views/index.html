@@ -17,7 +17,14 @@
         const client = io('http://localhost:3333/');
 
         client.on('connect', () => {
+            client.emit('add', {
+                email: 'email@email.com',
+            })
             console.log(`Connected with id: ${client.id}`);
+        });
+
+        client.on('approved', (data) => {
+            console.log(data);
         })
     </script>
 </body>

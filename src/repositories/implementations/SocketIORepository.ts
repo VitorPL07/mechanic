@@ -4,8 +4,9 @@ import { ISocketRepository } from "../ISocketRepository";
 export class SocketIORepository implements ISocketRepository {
     private sockets: Array<SocketIO> = [];
 
-    async findByEmail(email: string): Promise<any> {
+    async findByEmail(email: string): Promise<SocketIO | undefined> {
         const socketio = this.sockets.find((socketio) => socketio.email == email);
+
         return socketio
     }
 

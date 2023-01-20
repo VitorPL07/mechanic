@@ -3,7 +3,8 @@ import ejs from 'ejs';
 import express from 'express';
 import http from 'http';
 import socket, { Socket } from 'socket.io';
-import { router } from './routes';
+import { router, socketRepository } from './routes';
+import { addSocketController } from './useCases/AddSocket';
 
 const app = express();
 const server = http.createServer(app);
@@ -21,6 +22,10 @@ app.set('view engine', 'html');
 io.on('connection', (client: Socket) => {
     console.log(`Client: [${client.id}] connected!`);
 
+    client.on('add', async (data) => {
+        await addSocketController.handle(client, data.email, socketRepository);
+    });
+
     client.on('disconnect', () => {
         console.log(`Client: [${client.id}] disconnected!`);
     });
@@ -28,3 +33,4 @@ io.on('connection', (client: Socket) => {
 
 
 export { server };
+

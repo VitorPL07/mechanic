@@ -1,3 +1,6 @@
+import { SocketIORepository } from "../../repositories/implementations/SocketIORepository";
+
+
 interface IPart {
     name: string;
     description: string;
@@ -15,4 +18,5 @@ export interface IMessage {
 export interface SendApprovedRequestDTO {
     email: string;
     message: IMessage;
+    repository: SocketIORepository;
 }

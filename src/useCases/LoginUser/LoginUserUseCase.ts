@@ -7,7 +7,7 @@ export class LoginUserUseCase {
     ) { }
 
     async execute(data: ILoginUserRequestDTO) {
-        const user = await this.userRepository.find(data);
+        const user = await this.userRepository.findMechanic(data);
 
         if (!user) {
             throw new Error('User not found!');

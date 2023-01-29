@@ -1,4 +1,5 @@
-import { User } from "../models/User";
+import { Mechanic } from "../database/entities/Mechanic";
+import { Order } from "../database/entities/Order";
 
 export interface ILoginUser {
     email: string,
@@ -6,7 +7,9 @@ export interface ILoginUser {
 }
 
 export interface IUsersRepository {
-    findByEmail(email: string): Promise<any>;
-    find(data: ILoginUser): Promise<any>;
-    save(user: User): Promise<void>;
+    findMechanicByEmail(email: string): Promise<Mechanic | null>;
+    findOrderByID(id: string): Promise<Order | null>;
+    findMechanic(data: ILoginUser): Promise<Mechanic | null>;
+    saveOrder(order: Order): Promise<void>;
+    saveMechanic(user: Mechanic): Promise<void>;
 }

@@ -4,10 +4,9 @@ import { CreateUserUseCase } from "./CreateUserUseCase";
 
 const postgresUsersReposiroty = new PostgresUsersRepository();
 
-const createUserUseCase = new CreateUserUseCase(
-    postgresUsersReposiroty,
-);
+const createUserUseCase = new CreateUserUseCase(postgresUsersReposiroty);
 
 const createUserController = new CreateUserController(createUserUseCase);
 
 export { createUserUseCase, createUserController };
+

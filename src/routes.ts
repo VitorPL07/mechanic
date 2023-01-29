@@ -2,6 +2,7 @@ import { Request, Response, Router } from "express";
 import path from "path";
 import { SocketIORepository } from "./repositories/implementations/SocketIORepository";
 import { createUserController } from "./useCases/CreateUser";
+import { findOrderController } from "./useCases/FindOrder";
 import { loginUserController } from "./useCases/LoginUser";
 import { sendApprovedController } from "./useCases/SendApproved";
 
@@ -12,9 +13,8 @@ router.get('/', (request: Request, response: Response) => {
     response.sendFile(path.resolve(__dirname, 'views', 'index.html'));
 });
 
-router.get('/client/:code', (request: Request, response: Response) => {
-    const { code } = request.params;
-    response.render(path.resolve(__dirname, 'views', 'code.html'), { code: code });
+router.get('/code/:code', async (request: Request, response: Response) => {
+    await findOrderController.handle(request, response);
 });
 
 router.post('/login', (request: Request, response: Response) => {

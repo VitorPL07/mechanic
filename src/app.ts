@@ -5,6 +5,7 @@ import http from 'http';
 import socket, { Socket } from 'socket.io';
 import { router, socketRepository } from './routes';
 import { addSocketController } from './useCases/AddSocket';
+import { removeSocketController } from './useCases/RemoveSocket';
 
 const app = express();
 const server = http.createServer(app);
@@ -26,7 +27,8 @@ io.on('connection', (client: Socket) => {
         await addSocketController.handle(client, data.email, socketRepository);
     });
 
-    client.on('disconnect', () => {
+    client.on('disconnect', async () => {
+        await removeSocketController.handle(client.id, socketRepository)
         console.log(`Client: [${client.id}] disconnected!`);
     });
 });

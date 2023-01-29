@@ -1,21 +1,45 @@
-import { client } from "../../database/db";
-import { User } from "../../models/User";
+import orm from '../../../ormconfig';
+import { Mechanic } from '../../database/entities/Mechanic';
+import { Order } from '../../database/entities/Order';
 import { ILoginUser, IUsersRepository } from "../IUsersRepository";
 
 export class PostgresUsersRepository implements IUsersRepository {
-    async findByEmail(email: string): Promise<any> {
-        const { rows } = await client.query('SELECT * FROM test.users WHERE email = $1', [email]);
+    async findMechanicByEmail(email: string): Promise<Mechanic | null> {
+        const mechanic = await orm.getRepository(Mechanic).findOne({
+            where: {
+                email: email
+            }
+        });
 
-        return rows[0];
+        return mechanic;
     }
 
-    async save(user: User): Promise<void> {
-        await client.query('INSERT INTO test.users VALUES ($1, $2, $3, $4)', [user.id, user.name, user.email, user.password]);
+    async findOrderByID(id: string): Promise<Order | null> {
+        const order = await orm.getRepository(Order).findOne({
+            where: {
+                id: id
+            }
+        });
+
+        return order;
     }
 
-    async find(data: ILoginUser): Promise<any> {
-        const { rows } = await client.query('SELECT * FROM test.users WHERE email = $1 AND password = $2', [data.email, data.password]);
+    async findMechanic(props: ILoginUser): Promise<Mechanic | null> {
+        const mechanic = await orm.getRepository(Mechanic).findOne({
+            where: {
+                email: props.email,
+                password: props.password
+            }
+        });
 
-        return rows[0];
+        return mechanic;
+    }
+
+    async saveOrder(props: Order): Promise<void> {
+        await orm.getRepository(Order).save(props);
+    }
+
+    async saveMechanic(props: Mechanic): Promise<void> {
+        await orm.getRepository(Mechanic).save(props);
     }
 }

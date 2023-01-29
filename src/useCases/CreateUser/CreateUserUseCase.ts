@@ -1,4 +1,5 @@
-import { User } from "../../models/User";
+
+import { Mechanic } from "../../database/entities/Mechanic";
 import { IUsersRepository } from "../../repositories/IUsersRepository";
 import { ICreateUserRequestDTO } from "./CreateUserDTO";
 
@@ -7,14 +8,14 @@ export class CreateUserUseCase {
         private usersRepository: IUsersRepository,
     ) { }
     async execute(data: ICreateUserRequestDTO) {
-        const userAlreadyExists = await this.usersRepository.findByEmail(data.email);
+        const mechanicAlreadyExists = await this.usersRepository.findMechanicByEmail(data.email);
 
-        if (userAlreadyExists) {
+        if (mechanicAlreadyExists) {
             throw new Error('User already exists.');
         }
 
-        const user = new User(data);
+        const mechanic = new Mechanic(data);
 
-        await this.usersRepository.save(user);
+        await this.usersRepository.saveMechanic(mechanic);
     }
 }

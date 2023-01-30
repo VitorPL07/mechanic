@@ -20,13 +20,13 @@ export class Order {
     @Column()
     client!: string;
 
-    @Column()
-    price!: string;
+    @Column({ type: 'float' })
+    price!: number;
 
     @Column()
     mechanic_id!: string;
 
-    @ManyToOne(() => Mechanic)
+    @ManyToOne(() => Mechanic, mechanic => mechanic.id)
     @JoinColumn({ name: 'mechanic_id' })
     mechanic!: Mechanic
 
@@ -36,7 +36,7 @@ export class Order {
     @CreateDateColumn()
     created_at!: Date;
 
-    constructor(props: Omit<Order, 'id' | 'created_at'>, id?: string) {
+    constructor(props: Omit<Order, 'id' | 'created_at' | 'mechanic_id'>) {
         Object.assign(this, props);
 
         if (!this.id) {

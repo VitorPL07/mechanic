@@ -1,5 +1,6 @@
 import { randomUUID } from 'crypto';
-import { Column, CreateDateColumn, Entity, PrimaryColumn } from 'typeorm';
+import { Column, CreateDateColumn, Entity, OneToMany, PrimaryColumn } from 'typeorm';
+import { Order } from './Order';
 
 @Entity('mechanic')
 export class Mechanic {
@@ -15,10 +16,13 @@ export class Mechanic {
     @Column()
     password!: string;
 
+    @OneToMany(() => Order, order => order.mechanic)
+    orders!: Order[]
+
     @CreateDateColumn()
     created_at!: Date;
 
-    constructor(props: Omit<Mechanic, 'id' | 'created_at'>, id?: string) {
+    constructor(props: Omit<Mechanic, 'id' | 'created_at' | 'orders'>) {
         Object.assign(this, props);
 
         if (!this.id) {
